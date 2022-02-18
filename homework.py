@@ -11,11 +11,17 @@ class Training:
                  duration: float,
                  weight: float,
                  ) -> None:
-        pass
+        self.action = action
+        self.duration = duration
+        self.weight = weight
+
 
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
-        pass
+        
+        distance_km = self.action * LEN_STEP / M_IN_KM 
+        return distance_km
+        
 
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
@@ -47,7 +53,19 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
-    pass
+
+    workout_type_list = {'SWM' : Swimming,
+                     'RUN' : Running,
+                     'WLK' : SportsWalking}
+
+    class_obj = workout_type_list[workout_type]
+
+    if workout_type == 'SWM':
+        return class_obj(workout_type, data[0], data[1], data[2], data[3], data[4])
+    elif workout_type == 'RUN':
+        return class_obj(workout_type, data[0], data[1], data[2])
+    elif workout_type == 'WLK':
+        return class_obj(workout_type, data[0], data[1], data[2], data[3])
 
 
 def main(training: Training) -> None:
