@@ -55,12 +55,15 @@ class Training:
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
-        info_message = InfoMessage(self.__class__.__name__,
+        info_message = InfoMessage(type(self).__name__,
                                    self.duration,
                                    self.get_distance(),
                                    self.get_mean_speed(),
                                    self.get_spent_calories())
         return info_message
+
+    def duration_in_minutes(self):
+        return self.duration * 60
 
 
 class Running(Training):
@@ -68,11 +71,10 @@ class Running(Training):
 
     CF_RUN_1 = 18
     CF_RUN_2 = 20
-    LEN_STEP = 0.65
 
     def get_spent_calories(self) -> float:
         cal_1 = (self.CF_RUN_1 * self.get_mean_speed() - self.CF_RUN_2)
-        calories = (cal_1 * self.weight / self.M_IN_KM * self.duration * 60)
+        calories = (cal_1 * self.weight / self.M_IN_KM * self.duration_in_minutes())
         return calories
 
 
@@ -82,7 +84,6 @@ class SportsWalking(Training):
     CF_WALK_1 = 0.035
     CF_WALK_2 = 2
     CF_WALK_3 = 0.029
-    LEN_STEP = 0.65
 
     def __init__(self,
                  action: int,
@@ -96,7 +97,7 @@ class SportsWalking(Training):
         cal_1 = self.get_mean_speed()**self.CF_WALK_2 // self.height
         cal_2 = cal_1 * self.CF_WALK_3 * self.weight
         cal_3 = self.CF_WALK_1 * self.weight + cal_2
-        calories = (cal_3 * self.duration * 60)
+        calories = (cal_3 * self.duration_in_minutes())
         return calories
 
 
@@ -133,10 +134,14 @@ class Swimming(Training):
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
 
-    workout_type_list = {'SWM': Swimming,
+    types_of_training = {'SWM': Swimming,
                          'RUN': Running,
                          'WLK': SportsWalking}
-    return workout_type_list[workout_type](*data)
+
+    if workout_type in types_of_training:
+        return types_of_training[workout_type](*data)
+    else:
+        raise ValueError("Передается несоответствующий вид тренировки в read_package")
 
 
 def main(training: Training) -> None:
@@ -150,7 +155,7 @@ if __name__ == '__main__':
     packages = [
         ('SWM', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
-        ('WLK', [9000, 1, 75, 180]),
+        ('WLK', [9000, 1, 75, 180])
     ]
 
     for workout_type, data in packages:
