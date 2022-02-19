@@ -55,6 +55,7 @@ class Training:
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
+        
         info_message = InfoMessage(type(self).__name__,
                                    self.duration,
                                    self.get_distance(),
@@ -63,6 +64,8 @@ class Training:
         return info_message
 
     def duration_in_minutes(self):
+        """Перевод времени занятия из часов в минуты."""
+
         return self.duration * 60
 
 
@@ -73,6 +76,8 @@ class Running(Training):
     CF_RUN_2 = 20
 
     def get_spent_calories(self) -> float:
+        """Подсчет потраченных калорий при тренировке: бег."""
+
         cal_1 = (self.CF_RUN_1 * self.get_mean_speed() - self.CF_RUN_2)
         calories = (cal_1 * self.weight / self.M_IN_KM * self.duration_in_minutes())
         return calories
@@ -94,6 +99,8 @@ class SportsWalking(Training):
         self.height = height
 
     def get_spent_calories(self) -> float:
+        """Подсчет потраченных калорий при тренировке: спортивная ходьба."""
+
         cal_1 = self.get_mean_speed()**self.CF_WALK_2 // self.height
         cal_2 = cal_1 * self.CF_WALK_3 * self.weight
         cal_3 = self.CF_WALK_1 * self.weight + cal_2
@@ -119,6 +126,8 @@ class Swimming(Training):
         self.count_pool = count_pool
 
     def get_spent_calories(self) -> float:
+        """Подсчет потраченных калорий при тренировке: плавание."""
+
         cal_1 = self.get_mean_speed() + self.CF_SWM_1
         calories = cal_1 * self.CF_SWM_2 * self.weight
         return calories
