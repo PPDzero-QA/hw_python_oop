@@ -1,33 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@PPDzero-QA 
-PPDzero-QA
-/
-hw_python_oop
-Private
-generated from yandex-praktikum/hw_python_oop
-Code
-Issues
-1
-Pull requests
-Actions
-Projects
-Security
-Insights
-Settings
-hw_python_oop/homework.py /
-@PPDzero-QA
-PPDzero-QA Need revert
-Latest commit b242181 1 minute ago
- History
- 1 contributor
-161 lines (123 sloc)  4.91 KB
-  
 class InfoMessage:
     """Информационное сообщение о тренировке."""
 
