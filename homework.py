@@ -55,7 +55,7 @@ class Training:
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
-        
+
         info_message = InfoMessage(type(self).__name__,
                                    self.duration,
                                    self.get_distance(),
@@ -64,7 +64,7 @@ class Training:
         return info_message
 
     def duration_in_minutes(self):
-        """Перевод времени занятия из часов в минуты."""
+        """Перевод длительность тренировки из часов в минуты."""
 
         return self.duration * 60
 
