@@ -69,7 +69,6 @@ class Running(Training):
     CF_RUN_1 = 18
     CF_RUN_2 = 20
     LEN_STEP = 0.65
-    TRAINING_TYPE = 'RUN'
 
     def get_spent_calories(self) -> float:
         cal_1 = (self.CF_RUN_1 * self.get_mean_speed() - self.CF_RUN_2)
@@ -84,7 +83,6 @@ class SportsWalking(Training):
     CF_WALK_2 = 2
     CF_WALK_3 = 0.029
     LEN_STEP = 0.65
-    TRAINING_TYPE = 'WLK'
 
     def __init__(self,
                  action: int,
@@ -108,7 +106,6 @@ class Swimming(Training):
     CF_SWM_1 = 1.1
     CF_SWM_2 = 2
     LEN_STEP = 1.38
-    TRAINING_TYPE = 'SWM'
 
     def __init__(self,
                  action: int,
