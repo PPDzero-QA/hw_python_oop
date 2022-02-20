@@ -1,17 +1,14 @@
+from dataclasses import dataclass
+
+@dataclass
 class InfoMessage:
     """Информационное сообщение о тренировке."""
 
-    def __init__(self, training_type: str,
-                 duration: float,
-                 distance: float,
-                 speed: float,
-                 calories: float,
-                 ) -> None:
-        self.training_type = training_type
-        self.distance = distance
-        self.speed = speed
-        self.calories = calories
-        self.duration = duration
+    training_type: str
+    duration: float
+    distance: float
+    speed: float
+    calories: float
 
     def get_message(self) -> str:
         return (f'Тип тренировки: {self.training_type}; '
@@ -24,8 +21,8 @@ class InfoMessage:
 class Training:
     """Базовый класс тренировки."""
 
-    M_IN_KM = 1000
-    LEN_STEP = 0.65
+    M_IN_KM: int = 1000
+    LEN_STEP: float = 0.65
 
     def __init__(self,
                  action: int,
@@ -51,7 +48,7 @@ class Training:
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
 
-        pass
+        raise NotImplementedError('Метод get_spent_calories нужно переопределить')
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -72,23 +69,24 @@ class Training:
 class Running(Training):
     """Тренировка: бег."""
 
-    CF_RUN_1 = 18
-    CF_RUN_2 = 20
+    CF_RUN_1: int = 18
+    CF_RUN_2: int = 20
 
     def get_spent_calories(self) -> float:
         """Подсчет потраченных калорий при тренировке: бег."""
 
         cal_1 = (self.CF_RUN_1 * self.get_mean_speed() - self.CF_RUN_2)
-        calories = (cal_1 * self.weight / self.M_IN_KM * self.duration_in_minutes())
+        calories = (cal_1 * self.weight / self.M_IN_KM
+                    * self.duration_in_minutes())
         return calories
 
 
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
 
-    CF_WALK_1 = 0.035
-    CF_WALK_2 = 2
-    CF_WALK_3 = 0.029
+    CF_WALK_1: float = 0.035
+    CF_WALK_2: int = 2
+    CF_WALK_3: float = 0.029
 
     def __init__(self,
                  action: int,
@@ -111,9 +109,9 @@ class SportsWalking(Training):
 class Swimming(Training):
     """Тренировка: плавание."""
 
-    CF_SWM_1 = 1.1
-    CF_SWM_2 = 2
-    LEN_STEP = 1.38
+    CF_SWM_1: float = 1.1
+    CF_SWM_2: int = 2
+    LEN_STEP: float = 1.38
 
     def __init__(self,
                  action: int,
