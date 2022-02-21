@@ -1,4 +1,5 @@
-from dataclasses import dataclass, asdict
+from dataclasses import asdict
+from dataclasses import dataclass
 
 
 @dataclass
@@ -10,14 +11,14 @@ class InfoMessage:
     distance: float
     speed: float
     calories: float
-    text_message = ('Тип тренировки: {training_type};'
+    TEXT_MESSAGE = ('Тип тренировки: {training_type};'
                     ' Длительность: {duration:.3f} ч.;'
                     ' Дистанция: {distance:.3f} км;'
                     ' Ср. скорость: {speed:.3f} км/ч;'
                     ' Потрачено ккал: {calories:.3f}.')
 
     def get_message(self) -> str:
-        return self.text_message.format(**asdict(self))
+        return self.TEXT_MESSAGE.format(**asdict(self))
 
 
 class Training:
@@ -139,11 +140,11 @@ def read_package(workout_type: str, data: list) -> Training:
     types_of_training = {'SWM': Swimming,
                          'RUN': Running,
                          'WLK': SportsWalking}
-    if workout_type in types_of_training:
-        return types_of_training[workout_type](*data)
-    else:
+    if workout_type not in types_of_training:
         raise ValueError('Передается несуществующий'
                          'вид тренировки в read_package')
+    else:
+        return types_of_training[workout_type](*data)
 
 
 def main(training: Training) -> None:
