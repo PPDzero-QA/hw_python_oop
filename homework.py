@@ -1,5 +1,4 @@
-from dataclasses import asdict
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 
 @dataclass
